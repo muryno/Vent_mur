@@ -15,4 +15,4 @@ interface ApiInterface {
 
 
 
-}// truck_name,truck_size,truck_no, truck_picture, item_id, fcm_token,lga_id
+}

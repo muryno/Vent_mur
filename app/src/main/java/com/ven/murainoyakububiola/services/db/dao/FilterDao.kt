@@ -1,4 +1,4 @@
-package com.ven.murainoyakubu.db.dao
+package com.ven.murainoyakububiola.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
