@@ -2,6 +2,7 @@ package com.ven.murainoyakububiola.ui
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ven.murainoyakububiola.MainApplication
 import com.ven.murainoyakububiola.R
 import com.ven.murainoyakububiola.services.model.Car
 import com.ven.murainoyakububiola.services.model.FilterEntity
@@ -37,7 +38,7 @@ class CarFilteredListActivity : BaseActivity() {
                 handleCarFiltering(data)
             }
         }
-        setToolbar(toolbar, "Car owner details")
+        setToolbar(toolbar, "Car owners ")
 
 
     }
@@ -46,20 +47,41 @@ class CarFilteredListActivity : BaseActivity() {
     fun handleCarFiltering( data  : FilterEntity?){
 
 
-       val carsData: ArrayList<Car>? = readCsv()
+
+        MainApplication.executorService.execute {
+            val carsData: ArrayList<Car>? = readCsv()
 
 
-        carsData?.filter {
-            it.gender == data?.gender || data?.countries?.contains(it.country) == true  ||
-
-            data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0
-                    ||
-                    it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0 ||
-
-                    data?.colors?.contains(it.car_color) == true
-        }?.let {carsDat?.addAll(it) }
+            carsData?.filter {
 
 
-        carsData?.let { adapter?.addItems(it) }
+
+
+                        (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0)
+
+
+            }?.let { carsDat?.addAll(it) }
+        }
+
+
+        carsDat?.let { adapter?.addItems(it) }
     }
 }
+//          carsData?.filter {
+//
+//                (
+//                        //check if gender are equal to car data
+//                        it.gender == data?.gender) ||
+//
+//                        //check if FilterEntity countries array contain car country
+//                        (data?.countries?.contains(it.country) == true) ||
+//
+//                        //date range from start to end
+//                        (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 ||
+//                                it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0) ||
+//
+//                        //check if FilterEntity color array contain car color
+//                        data?.colors?.contains(it.car_color) == true
+//            }?.let { carsDat?.addAll(it) }
+//        }

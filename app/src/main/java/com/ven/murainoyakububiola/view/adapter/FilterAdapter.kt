@@ -51,7 +51,7 @@ class FilterAdapter(private val listener: CustomItemClickListener<FilterEntity>)
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (mSecuritiesList?.size!! > 0) {
+        return if (mSecuritiesList.size > 0) {
             VIEW_TYPE_NORMAL
         } else {
             VIEW_TYPE_EMPTY
@@ -77,8 +77,8 @@ class FilterAdapter(private val listener: CustomItemClickListener<FilterEntity>)
 
     inner class SecurityViewHolder(itemView: View) :
         BaseViewHolder(itemView) {
-        val txt_start: TextView = itemView.txt_start
-        val txt_stop : TextView = itemView.txt_stop
+        val txt_start = itemView.txt_start
+        val txt_stop  = itemView.txt_stop
         val txt_color: TextView = itemView.txt_color
         val txt_country : TextView = itemView.txt_country
         val txt_gender = itemView.txt_gender
@@ -100,8 +100,14 @@ class FilterAdapter(private val listener: CustomItemClickListener<FilterEntity>)
 
         override fun onBind(position: Int) {
             super.onBind(position)
-            val securities: FilterEntity? = mSecuritiesList?.get(position)
+            val securities: FilterEntity? = mSecuritiesList.get(position)
 
+
+            txt_start.text = securities?.startYear.toString()
+            txt_stop.text = securities?.endYear.toString()
+            txt_gender.text = securities?.gender
+            txt_color.text = securities?.colors.toString()
+            txt_country.text = securities?.countries.toString()
 
 
             //hide view if empty
@@ -120,11 +126,7 @@ class FilterAdapter(private val listener: CustomItemClickListener<FilterEntity>)
 
 
             // kotlin handle nullable
-            txt_start.text = securities?.startYear?.toString()
-            txt_stop.text = securities?.endYear?.toString()
-            txt_gender.text = securities?.gender
-            txt_color.text = securities?.colors.toString()
-            txt_country.text = securities?.countries.toString()
+
 
 
             //onclick on view
