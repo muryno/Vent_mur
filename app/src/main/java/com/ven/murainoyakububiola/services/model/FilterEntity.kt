@@ -1,4 +1,4 @@
-package com.ven.murainoyakubu.db.model
+package com.ven.murainoyakububiola.services.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
