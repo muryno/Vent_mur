@@ -1,4 +1,4 @@
-package com.ven.murainoyakubu.db.model
+package com.ven.murainoyakububiola.services.model
 
 import java.io.Serializable
 
@@ -35,4 +35,8 @@ class Car :Serializable {
 
     var bio: String? = null
 
+
+    fun fullname():String{
+        return "$first_name $last_name"
+    }
 }

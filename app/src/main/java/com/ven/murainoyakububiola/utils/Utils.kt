@@ -1,12 +1,17 @@
-package com.muryno.cardfinder.utils
+package com.ven.murainoyakububiola.utils
 
 import android.annotation.TargetApi
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
-import android.text.Editable
-import com.muryno.cardfinder.MainApplication
-import com.muryno.cardfinder.R
+import android.os.Environment
+
+import com.ven.murainoyakububiola.MainApplication
+import com.ven.murainoyakububiola.services.model.Car
+import de.siegmar.fastcsv.reader.CsvContainer
+import de.siegmar.fastcsv.reader.CsvReader
+import java.io.File
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 
@@ -25,118 +30,39 @@ fun isOnline(): Boolean {
     return activeNetwork != null
 }
 
-fun greetings() :String? {
-    val c = Calendar.getInstance()
 
-    val earlmorning = "Dear you should be on bed"
-    val morning2 = "Wake up dear.. good morning"
-    val morning3 = "Beautiful morning"
-    val evening = "Good afternoon"
-    val day = "Guess your day is going on fine"
-    val night = "Good evening"
-    when (c.get(Calendar.HOUR_OF_DAY)) {
-        in 0..5 -> {
-            return earlmorning
-        }
-        in 6..7 -> {
-            return morning2
-        }
-        in 8..11 -> {
-            return morning3
-        }
+fun readCsv(): ArrayList<Car> {
+    val data : ArrayList<Car> = ArrayList()
 
-        in 12..16 -> {
-            return evening
-        }
+    val csvfile = File(Environment.getExternalStorageState().toString() + "/venten/car_ownsers_data.csv")
 
-        in 17..20 -> {
-            return day
-        }
+    val csvReader = CsvReader()
+    csvReader.setContainsHeader(true)
 
-        in 21..23 -> {
-            return night
-        }
+    val csv: CsvContainer = csvReader.read(csvfile, StandardCharsets.UTF_8)
+    for (row in csv.rows) {
 
 
+        val carData = Car()
+
+        carData.id = row.getField(0)
+        carData.bio = row.getField(10)
+        carData.car_color =row.getField(7)
+        carData.car_model =row.getField(5)
+        carData.car_model_year = row.getField(6)
+        carData.country = row.getField(4)
+
+
+        carData.email = row.getField(3)
+        carData.first_name = row.getField(1)
+        carData.last_name = row.getField(2)
+        carData.gender =row.getField(8)
+        carData.job_title = row.getField(9)
+
+        data.add(carData)
     }
-    return ""
-}
+
+    return  data
 
 
-fun getGreetingIcon() :Int? {
-
-    val c = Calendar.getInstance()
-
-    when (c.get(Calendar.HOUR_OF_DAY)) {
-        in 0..5 -> {
-            return R.drawable.ic_sleepy
-        }
-        in 6..7 -> {
-            return R.drawable.ic_wake_up
-        }
-        in 8..11 -> {
-            return R.drawable.ic_sun
-        }
-
-        in 12..16 -> {
-            return R.drawable.ic_afternoon
-        }
-
-        in 17..20 -> {
-            return R.drawable.ic_happy
-        }
-
-        in 21..23 -> {
-            return R.drawable.ic_cloudy_night
-        }
-    }
-return 0
-
-}
-
-//m
-fun getCartLogo(s: Editable): Int{
-
-    when (s.substring(0, 1).toInt()) {
-        4 -> {
-            return R.drawable.ic_visa
-        }
-        5 -> {
-            return  R.drawable.ic_mastercard
-        }
-        6 -> {
-            return  R.drawable.ic_discover
-        }
-        3 -> {
-            return  R.drawable.ic_amex
-        }
-        else -> {
-            return  R.drawable.ic_warning
-        }
-    }
-}
-
-fun setCardNumber(s: Editable){
-    val space = ' '
-
-    var pos = 0
-    while (true) {
-        if (pos >= s.length) break
-        if (space == s[pos] && ((pos + 1) % 5 != 0 || pos + 1 == s.length)) {
-            s.delete(pos, pos + 1)
-        } else {
-            pos++
-        }
-    }
-    // Insert char where needed.
-    pos = 4
-    while (true) {
-        if (pos >= s.length) break
-        val c = s[pos]
-        // Only if its a digit where there should be a space we insert a space
-        if ("0123456789".indexOf(c) >= 0) {
-            s.insert(pos, "" + space)
-        }
-        pos += 5
-    }
 }

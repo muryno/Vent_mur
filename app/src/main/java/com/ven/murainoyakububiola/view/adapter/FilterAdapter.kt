@@ -7,17 +7,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.ven.murainoyakububiola.R
-import com.ven.murainoyakububiola.services.model.Filter
+import com.ven.murainoyakububiola.services.model.FilterEntity
 import com.ven.murainoyakububiola.view.base.BaseViewHolder
+import com.ven.murainoyakububiola.view.base.CustomItemClickListener
 import kotlinx.android.synthetic.main.layout_filter.view.*
 
 
-class MarketStockAdapter(var mSecuritiesList: ArrayList<Filter>) :
+class FilterAdapter(private val listener: CustomItemClickListener<FilterEntity>) :
     RecyclerView.Adapter<BaseViewHolder>() {
 
+    var mSecuritiesList: ArrayList<FilterEntity>  = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
@@ -50,7 +51,7 @@ class MarketStockAdapter(var mSecuritiesList: ArrayList<Filter>) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (mSecuritiesList.size > 0) {
+        return if (mSecuritiesList?.size!! > 0) {
             VIEW_TYPE_NORMAL
         } else {
             VIEW_TYPE_EMPTY
@@ -65,7 +66,7 @@ class MarketStockAdapter(var mSecuritiesList: ArrayList<Filter>) :
         }
     }
 
-    fun addItems(securitiesList: List<Filter>) {
+    fun addItems(securitiesList: List<FilterEntity>) {
         mSecuritiesList.addAll(securitiesList)
         notifyDataSetChanged()
     }
@@ -99,27 +100,35 @@ class MarketStockAdapter(var mSecuritiesList: ArrayList<Filter>) :
 
         override fun onBind(position: Int) {
             super.onBind(position)
-            val securities: Filter? = mSecuritiesList[position]
+            val securities: FilterEntity? = mSecuritiesList?.get(position)
 
-            txt_start.text = securities?.startYear?.toString()
-            txt_stop.text = securities?.endYear?.toString()
 
+
+            //hide view if empty
             if( securities?.gender.isNullOrEmpty()){
-
+                txt_gender.visibility= View.GONE
+                img_view.visibility= View.GONE
             }
             if( securities?.colors.isNullOrEmpty()){
                 color_view.visibility= View.GONE
+                first_view.visibility= View.GONE
             }
             if( securities?.countries.isNullOrEmpty()){
-
+                country_view.visibility= View.GONE
+                sec_view.visibility= View.GONE
             }
+
+
+            // kotlin handle nullable
+            txt_start.text = securities?.startYear?.toString()
+            txt_stop.text = securities?.endYear?.toString()
             txt_gender.text = securities?.gender
-
             txt_color.text = securities?.colors.toString()
-
             txt_country.text = securities?.countries.toString()
 
 
+            //onclick on view
+            itemView.setOnClickListener { securities?.let { it1 -> listener.onItemClick(it1) } }
 
 
         }

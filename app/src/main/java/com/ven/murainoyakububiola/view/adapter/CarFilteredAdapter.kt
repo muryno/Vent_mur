@@ -4,19 +4,17 @@ package com.ven.murainoyakububiola.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.ven.murainoyakububiola.R
-import com.ven.murainoyakububiola.services.model.Filter
+import com.ven.murainoyakububiola.services.model.Car
 import com.ven.murainoyakububiola.view.base.BaseViewHolder
-import com.ven.murainoyakububiola.view.base.CustomItemClickListener
-import kotlinx.android.synthetic.main.layout_filter.view.*
+import kotlinx.android.synthetic.main.layout_filter.view.txt_country
+import kotlinx.android.synthetic.main.layout_filter.view.txt_gender
+import kotlinx.android.synthetic.main.layout_filter_details.view.*
 
 
-class CarFilteredAdapter(var mSecuritiesList: ArrayList<Filter>, private val listener: CustomItemClickListener<Filter>) :
+class CarFilteredAdapter(var mSecuritiesList: ArrayList<Car>) :
     RecyclerView.Adapter<BaseViewHolder>() {
 
 
@@ -24,7 +22,7 @@ class CarFilteredAdapter(var mSecuritiesList: ArrayList<Filter>, private val lis
         return when (viewType) {
             VIEW_TYPE_NORMAL -> SecurityViewHolder(
                 LayoutInflater.from(parent.context).inflate(
-                    R.layout.layout_filter,
+                    R.layout.layout_filter_details,
                     parent,
                     false
                 )
@@ -66,7 +64,7 @@ class CarFilteredAdapter(var mSecuritiesList: ArrayList<Filter>, private val lis
         }
     }
 
-    fun addItems(securitiesList: List<Filter>) {
+    fun addItems(securitiesList: List<Car>) {
         mSecuritiesList.addAll(securitiesList)
         notifyDataSetChanged()
     }
@@ -77,22 +75,20 @@ class CarFilteredAdapter(var mSecuritiesList: ArrayList<Filter>, private val lis
 
     inner class SecurityViewHolder(itemView: View) :
         BaseViewHolder(itemView) {
-        val txt_start: TextView = itemView.txt_start
-        val txt_stop : TextView = itemView.txt_stop
-        val txt_color: TextView = itemView.txt_color
-        val txt_country : TextView = itemView.txt_country
+        val txt_fullname: TextView = itemView.txt_fullname
+        val txt_email : TextView = itemView.txt_email
+        val txt_job_title: TextView = itemView.txt_job_title
+        val txt_model_car : TextView = itemView.txt_model_car
+        val txt_model_year = itemView.txt_model_year
+
+        val txt_model_color  = itemView.txt_model_color
+
+
+        val txt_bio = itemView.txt_bio
+
+        val txt_country  = itemView.txt_country
+
         val txt_gender = itemView.txt_gender
-        //gender
-        val img_view : ImageView = itemView.img_view
-
-
-        //color
-        val color_view: LinearLayout = itemView.color_view
-        val first_view : View = itemView.first_view
-
-        //country
-        val country_view: LinearLayout = itemView.country_view
-        val sec_view : View = itemView.sec_view
 
         override fun clear() {
         }
@@ -100,35 +96,22 @@ class CarFilteredAdapter(var mSecuritiesList: ArrayList<Filter>, private val lis
 
         override fun onBind(position: Int) {
             super.onBind(position)
-            val securities: Filter? = mSecuritiesList[position]
+            val securities: Car? = mSecuritiesList[position]
 
+            txt_fullname.text = securities?.fullname()
+            txt_email.text = securities?.email
+            txt_job_title.text = securities?.job_title
 
+            txt_model_car.text = securities?.car_model
+            txt_model_year.text = securities?.car_model_year
+            txt_model_color.text = securities?.car_color
 
-            //hide view if empty
-            if( securities?.gender.isNullOrEmpty()){
-                txt_gender.visibility= View.GONE
-                img_view.visibility= View.GONE
-            }
-            if( securities?.colors.isNullOrEmpty()){
-                color_view.visibility= View.GONE
-                first_view.visibility= View.GONE
-            }
-            if( securities?.countries.isNullOrEmpty()){
-                country_view.visibility= View.GONE
-                sec_view.visibility= View.GONE
-            }
-
-
-            // kotlin handle nullable
-            txt_start.text = securities?.startYear?.toString()
-            txt_stop.text = securities?.endYear?.toString()
+            txt_bio.text = securities?.bio
+            txt_country.text = securities?.country
             txt_gender.text = securities?.gender
-            txt_color.text = securities?.colors.toString()
-            txt_country.text = securities?.countries.toString()
 
 
-            //onclick on view
-            itemView.setOnClickListener { securities?.let { it1 -> listener.onItemClick(it1) } }
+
 
 
         }

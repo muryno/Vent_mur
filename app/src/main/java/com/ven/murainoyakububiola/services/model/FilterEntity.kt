@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 @Entity(tableName = "filters")
-class Filter : Serializable {
+class FilterEntity : Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")

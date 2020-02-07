@@ -1,4 +1,4 @@
-package com.ven.murainoyakubu
+package com.ven.murainoyakububiola
 
 import androidx.multidex.MultiDexApplication
 import java.util.concurrent.Executors

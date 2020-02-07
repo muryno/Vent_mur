@@ -14,10 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
-import com.muryno.cardfinder.MainApplication
-import com.muryno.cardfinder.R
-import com.muryno.cardfinder.utils.isOnline
-import es.dmoral.toasty.Toasty
+import com.ven.murainoyakububiola.R
+import com.ven.murainoyakububiola.utils.isOnline
+
 
 //this is unique and to be use by all activity with same properties
 abstract class BaseActivity: AppCompatActivity() {
@@ -112,21 +111,5 @@ abstract class BaseActivity: AppCompatActivity() {
         }
     }
 
-    protected fun toastSuccess(msg: String) {
-        MainApplication.instance?.applicationContext?.let {
-            Toasty.success(it, msg, Toast.LENGTH_SHORT, true).show() }
-    }
-
-    protected fun toastError(msg: String) {
-        MainApplication.instance?.applicationContext?.let { Toasty.error(it, msg, Toast.LENGTH_SHORT, true).show() }
-    }
-
-    protected fun toastInfo(msg: String) {
-        MainApplication.instance?.applicationContext?.let { Toasty.info(it, msg, Toast.LENGTH_SHORT, true).show() }
-    }
-
-    protected fun toastWarning(msg: String) {
-        MainApplication.instance?.applicationContext?.let { Toasty.warning(it, msg, Toast.LENGTH_SHORT, true).show() }
-    }
 
 }

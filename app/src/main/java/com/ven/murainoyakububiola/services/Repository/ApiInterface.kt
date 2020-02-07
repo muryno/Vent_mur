@@ -1,8 +1,8 @@
-package com.ven.murainoyakubu.server
+package com.ven.murainoyakububiola.services.Repository
 
 
 
-import com.ven.murainoyakubu.db.model.Filter
+import com.ven.murainoyakububiola.services.model.FilterEntity
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -10,7 +10,7 @@ import retrofit2.http.*
 interface ApiInterface {
 
     @GET("assessment/filter.json")
-    fun getFilter(): Call<List<Filter>>
+    fun getFilter(): Call<List<FilterEntity>>
 
 
 

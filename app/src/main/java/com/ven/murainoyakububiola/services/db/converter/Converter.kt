@@ -1,4 +1,4 @@
-package com.ven.murainoyakububiola.db.converter
+package com.ven.murainoyakububiola.services.db.converter
 
 import androidx.room.TypeConverter
 
