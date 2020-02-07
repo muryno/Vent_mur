@@ -1,7 +1,9 @@
 package com.ven.murainoyakububiola.ui
 
+import android.Manifest
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -16,7 +18,7 @@ import com.ven.murainoyakububiola.view.base.BaseActivity
 import com.ven.murainoyakububiola.view.base.CustomItemClickListener
 import com.ven.murainoyakububiola.viewmodel.FilteredListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.FileFilter
+
 
 class FilteredListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener,
     CustomItemClickListener<FilterEntity> {
@@ -32,6 +34,9 @@ class FilteredListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
         viewModel = ViewModelProvider(this).get(FilteredListViewModel::class.java)
 
          views()
+
+
+        setToolbar( "Filter Details")
 
 
     }
@@ -62,6 +67,8 @@ class FilteredListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
 
 
         swipeRefresh?.setOnRefreshListener(this)
+
+        checkFileWritePermission()
 
     }
 
@@ -94,6 +101,15 @@ class FilteredListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
             intent.putExtra("data", args[0])
             Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
+        }
+    }
+
+    private fun checkFileWritePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) requestPermissions(
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                100
+            )
         }
     }
 }

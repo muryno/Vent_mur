@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:background="@color/colorPrimary"
 
-        android:padding="10dp"
+        android:padding="15dp"
 
 
         android:layout_height="wrap_content">
@@ -38,7 +38,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="3dp"
             android:fontFamily="@font/sfprodisplay_bold"
-            android:text="1990"
+            tools:text="1990"
             android:textSize="16sp"
             android:textColor="@color/white"
 
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="2005"
+            tools:text="2005"
             android:textSize="16sp"
             android:textColor="@color/white"
 

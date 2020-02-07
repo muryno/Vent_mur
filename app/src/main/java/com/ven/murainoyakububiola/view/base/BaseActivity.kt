@@ -33,6 +33,13 @@ abstract class BaseActivity: AppCompatActivity() {
         }
     }
 
+    fun setToolbar(title: String) {
+        if (supportActionBar != null) {
+            supportActionBar?.title = title
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
 
     override fun setContentView(@LayoutRes layoutResID: Int) {
         super.setContentView(layoutResID)

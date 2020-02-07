@@ -11,6 +11,7 @@ import com.ven.murainoyakububiola.services.model.Car
 import de.siegmar.fastcsv.reader.CsvContainer
 import de.siegmar.fastcsv.reader.CsvReader
 import java.io.File
+import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.util.*
 
@@ -31,35 +32,46 @@ fun isOnline(): Boolean {
 }
 
 
-fun readCsv(): ArrayList<Car> {
+fun readCsv(): ArrayList<Car>? {
     val data : ArrayList<Car> = ArrayList()
 
-    val csvfile = File(Environment.getExternalStorageState().toString() + "/venten/car_ownsers_data.csv")
-
-    val csvReader = CsvReader()
-    csvReader.setContainsHeader(true)
-
-    val csv: CsvContainer = csvReader.read(csvfile, StandardCharsets.UTF_8)
-    for (row in csv.rows) {
+    try {
 
 
-        val carData = Car()
+        val csvfile =
+            File(Environment.getExternalStorageDirectory().toString() + "/venten/car_ownsers_data.csv")
 
-        carData.id = row.getField(0)
-        carData.bio = row.getField(10)
-        carData.car_color =row.getField(7)
-        carData.car_model =row.getField(5)
-        carData.car_model_year = row.getField(6)
-        carData.country = row.getField(4)
+        val csvReader = CsvReader()
+        csvReader.setContainsHeader(true)
+
+        val csv: CsvContainer = csvReader.read(csvfile, StandardCharsets.UTF_8)
+        for (row in csv.rows) {
 
 
-        carData.email = row.getField(3)
-        carData.first_name = row.getField(1)
-        carData.last_name = row.getField(2)
-        carData.gender =row.getField(8)
-        carData.job_title = row.getField(9)
+            val carData = Car()
 
-        data.add(carData)
+            carData.id = row.getField(0)
+            carData.bio = row.getField(10)
+            carData.car_color = row.getField(7)
+            carData.car_model = row.getField(5)
+            carData.car_model_year = row.getField(6)
+            carData.country = row.getField(4)
+
+
+            carData.email = row.getField(3)
+            carData.first_name = row.getField(1)
+            carData.last_name = row.getField(2)
+            carData.gender = row.getField(8)
+            carData.job_title = row.getField(9)
+
+            data.add(carData)
+
+
+
+        }
+    }catch ( e: IOException){
+        e.cause
+        return null
     }
 
     return  data

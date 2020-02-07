@@ -14,9 +14,9 @@ import kotlinx.android.synthetic.main.layout_filter.view.txt_gender
 import kotlinx.android.synthetic.main.layout_filter_details.view.*
 
 
-class CarFilteredAdapter(var mSecuritiesList: ArrayList<Car>) :
+class CarFilteredAdapter() :
     RecyclerView.Adapter<BaseViewHolder>() {
-
+    var mSecuritiesList: ArrayList<Car>  = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
@@ -64,7 +64,7 @@ class CarFilteredAdapter(var mSecuritiesList: ArrayList<Car>) :
         }
     }
 
-    fun addItems(securitiesList: List<Car>) {
+    fun addItems(securitiesList: ArrayList<Car>) {
         mSecuritiesList.addAll(securitiesList)
         notifyDataSetChanged()
     }
