@@ -39,16 +39,22 @@ class FilteredListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
         setToolbar( "Filter Details")
 
 
+
     }
 
 
     private fun views(){
+
+        checkFileWritePermission()
+
+
 
         adapter = FilterAdapter(this)
         val manager = LinearLayoutManager(this)
         _recyclerView__filter?.layoutManager = manager
         _recyclerView__filter?.adapter = adapter
 
+        //
         viewModel?.errorMessage?.observe(this, Observer {
             progressBar.visibility = View.GONE
             swipeRefresh?.isRefreshing = false
@@ -68,7 +74,6 @@ class FilteredListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
 
         swipeRefresh?.setOnRefreshListener(this)
 
-        checkFileWritePermission()
 
     }
 
@@ -92,23 +97,21 @@ class FilteredListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
 
 
     override fun onItemClick(vararg args: FilterEntity) {
-
-        if(args[0] != null) {
-
-
-            val i = Intent(this,CarFilteredListActivity::class.java)
-            i.putExtra("data",args[0])
-            startActivity(i)
-          //  viewModel?.handleCarFiltering(args[0])
-        }
+        val i = Intent(this,CarFilteredListActivity::class.java)
+        i.putExtra("data",args[0])
+        startActivity(i)
     }
+
+
 
     private fun checkFileWritePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) requestPermissions(
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) requestPermissions(
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 100
             )
         }
     }
+
+
 }

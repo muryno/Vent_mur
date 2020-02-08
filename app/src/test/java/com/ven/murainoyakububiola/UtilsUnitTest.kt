@@ -24,7 +24,7 @@ class UtilsUnitTest {
 
 
     @Test
-    @Throws(Exception::class)
+  //  @Throws(Exception::class)
     fun csvFileObjectShouldNotBeNull() {
 
 

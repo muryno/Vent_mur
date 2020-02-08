@@ -4,24 +4,22 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ven.murainoyakububiola.MainApplication
+import com.example.android.guesstheword.screens.score.CarFilteredModelFactory
+import com.example.android.guesstheword.screens.score.CarFilteredViewModel
 import com.ven.murainoyakububiola.R
-import com.ven.murainoyakububiola.services.model.Car
 import com.ven.murainoyakububiola.services.model.FilterEntity
-import com.ven.murainoyakububiola.utils.handleCar
-import com.ven.murainoyakububiola.utils.readCsv
 import com.ven.murainoyakububiola.view.adapter.CarFilteredAdapter
 import com.ven.murainoyakububiola.view.base.BaseActivity
-import com.ven.murainoyakububiola.viewmodel.FilteredListViewModel
 import kotlinx.android.synthetic.main.activity_car_filtered_list.*
-import java.util.ArrayList
 
 class CarFilteredListActivity : BaseActivity() {
 
 
 
 
-    private var viewModel: FilteredListViewModel? = null
+
+    private lateinit var viewModel: CarFilteredViewModel
+    private lateinit var viewModelFactory: CarFilteredModelFactory
 
     private  var adapter: CarFilteredAdapter?= null
     var data :FilterEntity ? = null
@@ -31,35 +29,39 @@ class CarFilteredListActivity : BaseActivity() {
         setContentView(R.layout.activity_car_filtered_list)
 
 
-        if (intent != null) {
-            data = intent.getSerializableExtra("data") as FilterEntity?
-            if (data == null) {
-                finish()
+        if (intent != null) { data = intent.getSerializableExtra("data") as FilterEntity? }
 
-                //if the data is null, it should close the page, nothing to display
+
+        views()
+
+        }
+
+
+
+    fun views(){
+
+        /**instantiate view model and view model factory to pass FilterEntity  and detach the heavy work from activity**/
+        viewModelFactory = CarFilteredModelFactory(data)
+        viewModel = ViewModelProvider(this, viewModelFactory)
+            .get(CarFilteredViewModel::class.java)
+
+
+        /**instantiate vadater class and setting it up **/
+        adapter = CarFilteredAdapter()
+        val manager = LinearLayoutManager(this)
+        _recyclerView__car?.layoutManager = manager
+        _recyclerView__car?.adapter = adapter
+
+
+
+        setToolbar(toolbar, "Car owners ")
+
+
+        viewModel.carList.observe(this, Observer {
+            if (it != null) {
+                adapter?.addItems(it)
             }
-        }
-            adapter = CarFilteredAdapter()
-            val manager = LinearLayoutManager(this)
-            _recyclerView__car?.layoutManager = manager
-            _recyclerView__car?.adapter = adapter
-
-
-
-            setToolbar(toolbar, "Car owners ")
-
-             getDatas(data)
-
-
-        }
-
-
-    private fun getDatas(ty : FilterEntity?){
-        val carsDat  = handleCar(ty)
-
-        if (carsDat != null) {
-            adapter?.addItems(carsDat)
-        }
+        })
     }
 
 }
