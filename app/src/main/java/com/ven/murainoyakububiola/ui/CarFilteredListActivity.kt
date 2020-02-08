@@ -54,13 +54,19 @@ class CarFilteredListActivity : BaseActivity() {
 
             carsData?.filter {
 
+                (
+                        //check if gender are equal to car data
+                        it.gender == data?.gender) ||
 
+                        //check if FilterEntity countries array contain car country
+                        (data?.countries?.contains(it.country) == true) ||
 
+                        //date range from start to end
+                        (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 ||
+                                it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0) ||
 
-                        (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
-                                it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0)
-
-
+                        //check if FilterEntity color array contain car color
+                        data?.colors?.contains(it.car_color) == true
             }?.let { carsDat?.addAll(it) }
         }
 
@@ -68,20 +74,4 @@ class CarFilteredListActivity : BaseActivity() {
         carsDat?.let { adapter?.addItems(it) }
     }
 }
-//          carsData?.filter {
-//
-//                (
-//                        //check if gender are equal to car data
-//                        it.gender == data?.gender) ||
-//
-//                        //check if FilterEntity countries array contain car country
-//                        (data?.countries?.contains(it.country) == true) ||
-//
-//                        //date range from start to end
-//                        (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 ||
-//                                it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0) ||
-//
-//                        //check if FilterEntity color array contain car color
-//                        data?.colors?.contains(it.car_color) == true
-//            }?.let { carsDat?.addAll(it) }
-//        }
+//v

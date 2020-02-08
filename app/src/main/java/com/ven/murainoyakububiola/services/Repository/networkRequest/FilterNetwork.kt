@@ -2,7 +2,6 @@ package com.ven.murainoyakububiola.services.Repository.networkRequest
 
 
 import com.ven.murainoyakububiola.services.Repository.FilteredRepository.saveFilter
-import com.ven.murainoyakububiola.services.Repository.RetrofitClient
 import com.ven.murainoyakububiola.services.model.FilterEntity
 import com.ven.murainoyakububiola.view.errorMessageView
 import retrofit2.Call
