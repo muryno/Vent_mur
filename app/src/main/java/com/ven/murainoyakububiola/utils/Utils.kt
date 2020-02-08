@@ -15,6 +15,7 @@ import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 @TargetApi(Build.VERSION_CODES.M)
@@ -37,6 +38,7 @@ fun readCsv(): ArrayList<Car>? {
     val data : ArrayList<Car> = ArrayList()
 
     try {
+
 
 
         val csvfile =
@@ -86,33 +88,152 @@ fun readCsv(): ArrayList<Car>? {
 
 
 
-fun handleCarFiltering( data  : FilterEntity?):ArrayList<Car>? {
+fun handleCar( data  : FilterEntity?):ArrayList<Car>? {
 
 
     val carsDat: ArrayList<Car>? = ArrayList()
-
     MainApplication.executorService.execute {
         val carsData: ArrayList<Car>? = readCsv()
 
 
-        carsData?.filter {
+        //
+        /**filter by start and end date alone**/
 
-            (
-                    //check if gender are equal to car data
-                    it.gender == data?.gender) ||
+        if (data?.colors?.size ?: 0 < 1 && data?.gender.isNullOrEmpty() && data?.countries?.size ?: 0 < 1) {
+            carsData?.filter {
 
-                    //check if FilterEntity countries array contain car country
-                    (data?.countries?.contains(it.country) == true) ||
+                (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                        it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0)
+            }?.let { carsDat?.addAll(it) }
 
-                    //date range from start to end
-                    (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 ||
-                            it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0) ||
+        }
 
-                    //check if FilterEntity color array contain car color
-                    data?.colors?.contains(it.car_color) == true
-        }?.let { carsDat?.addAll(it) }
+
+        /**filter by date and countries**/
+        else if (data?.colors?.size ?: 0 < 1 && data?.gender.isNullOrEmpty() && data?.countries?.size ?: 0 > 1) {
+            carsData?.filter {
+
+
+                (data?.countries?.contains(it.country) == true) &&
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0)
+
+            }?.let { carsDat?.addAll(it) }
+        }
+
+
+        /**filter by date and colors**/
+        else if (data?.colors?.size ?: 0 > 1 && data?.gender.isNullOrEmpty() && data?.countries?.size ?: 0 < 1) {
+            carsData?.filter {
+
+
+                (data?.colors?.contains(it.car_color) == true) &&
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0)
+
+            }?.let { carsDat?.addAll(it) }
+        }
+
+
+        /**filter by date and gender**/
+
+        else if (data?.colors?.size ?: 0 < 1 && data?.gender?.isNotEmpty() == true && data?.countries?.size ?: 0 < 1) {
+            carsData?.filter {
+
+                (it.gender == data?.gender) &&
+                        (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0)
+
+
+            }?.let { carsDat?.addAll(it) }
+
+        }
+
+
+        /**filter all**/
+        else if (data?.colors?.size ?: 0 > 1 && data?.gender?.isNotEmpty() == true && data.countries?.size ?: 0 > 1) {
+            carsData?.filter {
+
+                (it.gender == data.gender) &&
+
+                        (data.countries?.contains(it.country) == true) &&
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0) &&
+
+                        data.colors?.contains(it.car_color) == true
+            }?.let { carsDat?.addAll(it) }
+
+        }
+
+
+            /**filter by date color and countries without gender**/
+            else if (data?.colors?.size ?: 0 > 1 && data?.gender.isNullOrEmpty() && data?.countries?.size ?: 0 > 1) {
+            carsData?.filter {
+
+
+                (data?.countries?.contains(it.country) == true) &&
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0) &&
+
+                        data.colors?.contains(it.car_color) == true
+            }?.let { carsDat?.addAll(it) }
+
+
+
+            /**filter by date color and gender without countries**/
+        } else if (data?.colors?.size ?: 0 > 1 && data?.gender?.isNotEmpty()==true && data.countries?.size ?: 0 < 1) {
+            carsData?.filter {
+
+                (it.gender == data.gender) &&
+
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0) &&
+
+                        data.colors?.contains(it.car_color) == true
+            }?.let { carsDat?.addAll(it) }
+
+
+        }
+
+
+        /**filter by date countries and gender without color**/
+        else if (data?.colors?.size ?: 0 < 1 && data?.gender?.isNotEmpty()==true && data.countries?.size ?: 0 > 1) {
+            carsData?.filter {
+
+                (it.gender == data.gender) &&
+
+                        (data.countries?.contains(it.country) == true) &&
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0)
+
+            }?.let { carsDat?.addAll(it) }
+
+            /**fetch without filter all**/
+        } else {
+            carsData?.filter {
+
+                (it.gender == data?.gender) ||
+
+                        (data?.countries?.contains(it.country) == true) ||
+
+                        (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 ||
+                                it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0) ||
+
+                        data?.colors?.contains(it.car_color) == true
+            }?.let { carsDat?.addAll(it) }
+
+        }
     }
 
 
-return carsDat
+
+
+    return carsDat
 }
+
