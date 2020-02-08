@@ -34,9 +34,9 @@ class FilteredListViewModel : ViewModel(), errorMessageView {
         get() = _errorMessage
 
 
+    private val _filteredData = MutableLiveData<ArrayList<Car>>()
 
-    val filteredData = MutableLiveData<ArrayList<Car>>()
-
+    val filteredData  :LiveData<ArrayList<Car>>? = _filteredData
 
    //make Network request
     fun loadFromServer(){
@@ -61,6 +61,6 @@ class FilteredListViewModel : ViewModel(), errorMessageView {
      */
     fun handleCarFiltering( data  : FilterEntity?) {
         val carsDat: ArrayList<Car>? = handleCar(data)
-        filteredData.value = carsDat
+        _filteredData.value = carsDat
     }
 }

@@ -94,9 +94,12 @@ class FilteredListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
     override fun onItemClick(vararg args: FilterEntity) {
 
         if(args[0] != null) {
-            startActivity( Intent(MainApplication.instance?.applicationContext, CarFilteredListActivity::class.java))
-            //send to viewmodel to handle filtering and it will be observe by CarFilteredListActivity
-            viewModel?.handleCarFiltering(args[0])
+
+
+            val i = Intent(this,CarFilteredListActivity::class.java)
+            i.putExtra("data",args[0])
+            startActivity(i)
+          //  viewModel?.handleCarFiltering(args[0])
         }
     }
 

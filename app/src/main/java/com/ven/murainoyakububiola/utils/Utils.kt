@@ -92,7 +92,6 @@ fun handleCar( data  : FilterEntity?):ArrayList<Car>? {
 
 
     val carsDat: ArrayList<Car>? = ArrayList()
-    MainApplication.executorService.execute {
         val carsData: ArrayList<Car>? = readCsv()
 
 
@@ -215,7 +214,8 @@ fun handleCar( data  : FilterEntity?):ArrayList<Car>? {
             }?.let { carsDat?.addAll(it) }
 
             /**fetch without filter all**/
-        } else {
+        }
+        else {
             carsData?.filter {
 
                 (it.gender == data?.gender) ||
@@ -229,7 +229,7 @@ fun handleCar( data  : FilterEntity?):ArrayList<Car>? {
             }?.let { carsDat?.addAll(it) }
 
         }
-    }
+
 
 
 
