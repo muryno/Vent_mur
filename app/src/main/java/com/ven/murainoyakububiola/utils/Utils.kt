@@ -5,17 +5,14 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Environment
-
+import android.util.Log
 import com.ven.murainoyakububiola.MainApplication
 import com.ven.murainoyakububiola.services.model.Car
 import com.ven.murainoyakububiola.services.model.FilterEntity
 import de.siegmar.fastcsv.reader.CsvContainer
 import de.siegmar.fastcsv.reader.CsvReader
-import java.io.File
-import java.io.IOException
+import java.io.*
 import java.nio.charset.StandardCharsets
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 @TargetApi(Build.VERSION_CODES.M)
@@ -40,9 +37,10 @@ fun readCsv(): ArrayList<Car>? {
     try {
 
 
+//        val csvfile = File(MainApplication.instance!!.applicationContext
+//            .getExternalFilesDir("/venten/car_ownsers_data.csv").toString()  )
 
-        val csvfile =
-            File(Environment.getExternalStorageDirectory().toString() + "/venten/car_ownsers_data.csv")
+        val csvfile = File(Environment.getExternalStorageDirectory().toString() + "/venten/car_ownsers_data.csv")
 
         val csvReader = CsvReader()
         csvReader.setContainsHeader(true)
@@ -230,13 +228,36 @@ fun handleCar( data  : FilterEntity?):ArrayList<Car>? {
 
         }
 
-
-
-
-
     return carsDat
 }
 
+fun objectCleaner(st : String): String{
 
 
+    st.substring(1, st.length -1)
+       return st
+}
 
+
+private  fun readFromFile(context: Context): String? {
+    var ret = ""
+    try {
+        val inputStream: InputStream? = context.openFileInput("/venten/car_ownsers_data.csv")
+        if (inputStream != null) {
+            val inputStreamReader = InputStreamReader(inputStream)
+            val bufferedReader = BufferedReader(inputStreamReader)
+            var receiveString: String? = ""
+            val stringBuilder = StringBuilder()
+            while (bufferedReader.readLine().also({ receiveString = it }) != null) {
+                stringBuilder.append("\n").append(receiveString)
+            }
+            inputStream.close()
+            ret = stringBuilder.toString()
+        }
+    } catch (e: FileNotFoundException) {
+        Log.e("login activity", "File not found: " + e.toString())
+    } catch (e: IOException) {
+        Log.e("login activity", "Can not read file: $e")
+    }
+    return ret
+}

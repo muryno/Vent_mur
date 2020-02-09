@@ -16,6 +16,7 @@ object FilteredRepository {
 
     fun saveFilter(data:List<FilterEntity>) {
         MainApplication.executorService.execute {
+            getAppDataBase()?.FilterDao()?.nukeFilterTable()
             getAppDataBase()?.FilterDao()?.saveFilter(data)
         }
     }

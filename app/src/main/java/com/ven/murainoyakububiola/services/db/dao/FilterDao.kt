@@ -5,7 +5,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-
 import com.ven.murainoyakububiola.services.model.FilterEntity
 
 
@@ -23,7 +22,8 @@ interface FilterDao {
     fun getFilter(): LiveData<List<FilterEntity>>
 
 
-
+    @Query("DELETE FROM filters")
+    fun nukeFilterTable()
 
 
 }

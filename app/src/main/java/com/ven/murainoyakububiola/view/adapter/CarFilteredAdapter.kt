@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ven.murainoyakububiola.R
 import com.ven.murainoyakububiola.services.model.Car
 import com.ven.murainoyakububiola.view.base.BaseViewHolder
+import kotlinx.android.synthetic.main.item_empty_view.view.*
 import kotlinx.android.synthetic.main.layout_filter.view.txt_country
 import kotlinx.android.synthetic.main.layout_filter.view.txt_gender
 import kotlinx.android.synthetic.main.layout_filter_details.view.*
@@ -121,6 +122,15 @@ class CarFilteredAdapter() :
 
     private inner class EmptyViewHolder(itemView: View?) :
         BaseViewHolder(itemView) {
+        val txt_country : TextView? = itemView?.tv_message
+
+        override fun onBind(position: Int) {
+            super.onBind(position)
+
+
+            txt_country?.text = "No record of car owner"
+
+        }
         override fun clear() {}
     }
 

@@ -10,8 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ven.murainoyakububiola.R
 import com.ven.murainoyakububiola.services.model.FilterEntity
+import com.ven.murainoyakububiola.utils.objectCleaner
 import com.ven.murainoyakububiola.view.base.BaseViewHolder
 import com.ven.murainoyakububiola.view.base.CustomItemClickListener
+import kotlinx.android.synthetic.main.item_empty_view.view.*
 import kotlinx.android.synthetic.main.layout_filter.view.*
 
 
@@ -106,9 +108,8 @@ class FilterAdapter(private val listener: CustomItemClickListener<FilterEntity>)
             txt_start.text = securities?.startYear.toString()
             txt_stop.text = securities?.endYear.toString()
             txt_gender.text = securities?.gender
-            txt_color.text = securities?.colors.toString()
-            txt_country.text = securities?.countries.toString()
-
+            txt_color.text = objectCleaner( securities?.colors.toString() )
+            txt_country.text = objectCleaner( securities?.countries.toString() )
 
             //hide view if empty
             if( securities?.gender.isNullOrEmpty()){
@@ -140,6 +141,9 @@ class FilterAdapter(private val listener: CustomItemClickListener<FilterEntity>)
 
     private inner class EmptyViewHolder(itemView: View?) :
         BaseViewHolder(itemView) {
+
+
+
         override fun clear() {}
     }
 

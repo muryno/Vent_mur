@@ -18,6 +18,7 @@ import com.ven.murainoyakububiola.view.base.BaseActivity
 import com.ven.murainoyakububiola.view.base.CustomItemClickListener
 import com.ven.murainoyakububiola.viewmodel.FilteredListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.toolbar
 
 
 class FilteredListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener,
@@ -31,12 +32,15 @@ class FilteredListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        toolbar.title = "Filter List"
+        setSupportActionBar(toolbar)
+
         viewModel = ViewModelProvider(this).get(FilteredListViewModel::class.java)
 
          views()
 
 
-        setToolbar( "Filter Details")
 
 
 
@@ -99,6 +103,7 @@ class FilteredListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
     override fun onItemClick(vararg args: FilterEntity) {
         val i = Intent(this,CarFilteredListActivity::class.java)
         i.putExtra("data",args[0])
+
         startActivity(i)
     }
 

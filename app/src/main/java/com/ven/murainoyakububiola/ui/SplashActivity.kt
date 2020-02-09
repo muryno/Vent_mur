@@ -11,5 +11,6 @@ class SplashActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         startActivity(Intent(this, FilteredListActivity::class.java))
+        finish()
     }
 }

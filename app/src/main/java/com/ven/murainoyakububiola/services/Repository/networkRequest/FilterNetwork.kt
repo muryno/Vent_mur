@@ -20,6 +20,7 @@ class FilterNetwork {
 
             override fun onResponse(call: Call<List<FilterEntity>>, response: Response<List<FilterEntity>>) {
                 if (response.isSuccessful && response.body() != null && response.body() != null) {
+
                     response.body()?.let { saveFilter(it) }
                     callback.loadingSuccessful("successful")
 

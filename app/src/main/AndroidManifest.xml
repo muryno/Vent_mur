@@ -32,10 +32,10 @@
 
 
         <activity android:name=".ui.CarFilteredListActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.FilteredListActivity"
-
             android:screenOrientation="portrait">
         </activity>
     </application>
