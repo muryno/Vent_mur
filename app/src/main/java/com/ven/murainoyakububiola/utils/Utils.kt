@@ -5,13 +5,13 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Environment
-import android.util.Log
 import com.ven.murainoyakububiola.MainApplication
 import com.ven.murainoyakububiola.services.model.Car
 import com.ven.murainoyakububiola.services.model.FilterEntity
 import de.siegmar.fastcsv.reader.CsvContainer
 import de.siegmar.fastcsv.reader.CsvReader
-import java.io.*
+import java.io.File
+import java.io.IOException
 import java.nio.charset.StandardCharsets
 
 
@@ -31,16 +31,14 @@ fun isOnline(): Boolean {
 }
 
 
-fun readCsv(): ArrayList<Car>? {
+fun readCsv(csvfile: File?): ArrayList<Car>? {
     val data : ArrayList<Car> = ArrayList()
 
     try {
 
 
-//        val csvfile = File(MainApplication.instance!!.applicationContext
-//            .getExternalFilesDir("/venten/car_ownsers_data.csv").toString()  )
 
-        val csvfile = File(Environment.getExternalStorageDirectory().toString() + "/venten/car_ownsers_data.csv")
+
 
         val csvReader = CsvReader()
         csvReader.setContainsHeader(true)
@@ -89,8 +87,9 @@ fun readCsv(): ArrayList<Car>? {
 fun handleCar( data  : FilterEntity?):ArrayList<Car>? {
 
 
+    /** to read from external storage**/
     val carsDat: ArrayList<Car>? = ArrayList()
-        val carsData: ArrayList<Car>? = readCsv()
+        val carsData: ArrayList<Car>? = readCsv(readFromExternalStorage())
 
 
         //
@@ -239,25 +238,30 @@ fun objectCleaner(st : String): String{
 }
 
 
-private  fun readFromFile(context: Context): String? {
-    var ret = ""
+/**Reading file from external storage is depreciated from API 29 and testing will fail **/
+  fun readFromExternalStorage(): File? {
+
+      val csvfile: File?
     try {
-        val inputStream: InputStream? = context.openFileInput("/venten/car_ownsers_data.csv")
-        if (inputStream != null) {
-            val inputStreamReader = InputStreamReader(inputStream)
-            val bufferedReader = BufferedReader(inputStreamReader)
-            var receiveString: String? = ""
-            val stringBuilder = StringBuilder()
-            while (bufferedReader.readLine().also({ receiveString = it }) != null) {
-                stringBuilder.append("\n").append(receiveString)
-            }
-            inputStream.close()
-            ret = stringBuilder.toString()
-        }
-    } catch (e: FileNotFoundException) {
-        Log.e("login activity", "File not found: " + e.toString())
-    } catch (e: IOException) {
-        Log.e("login activity", "Can not read file: $e")
+         csvfile = File(Environment.getExternalStorageDirectory().toString() + "/venten/car_ownsers_data.csv")
+
+    }catch ( e: IOException){
+        e.cause
+        return null
     }
-    return ret
+    return csvfile
+}
+
+
+fun readFromExternalFilesDir(): File? {
+
+    val csvfile: File?
+    try {
+        csvfile = File(MainApplication.instance?.applicationContext?.getExternalFilesDir("/venten/car_ownsers_data.csv").toString())
+
+    }catch ( e: IOException){
+        e.cause
+        return null
+    }
+    return csvfile
 }

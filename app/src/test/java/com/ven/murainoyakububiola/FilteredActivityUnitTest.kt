@@ -6,11 +6,11 @@ import com.ven.murainoyakububiola.services.model.FilterEntity
 import com.ven.murainoyakububiola.utils.handleCar
 import com.ven.murainoyakububiola.utils.isOnline
 import com.ven.murainoyakububiola.utils.readCsv
-import org.hamcrest.CoreMatchers.notNullValue
+import com.ven.murainoyakububiola.utils.readFromExternalFilesDir
 import org.junit.Assert
-import org.junit.Assert.assertThat
 import org.junit.Test
-import java.util.ArrayList
+import java.io.File
+import java.util.*
 
 class FilteredActivityUnitTest {
 
@@ -29,8 +29,9 @@ class FilteredActivityUnitTest {
     @Throws(Exception::class)
     fun csvFileObjectShouldNotBeNull() {
 
+        val readFileDir: File? = readFromExternalFilesDir()
 
-        val file: ArrayList<Car>? = readCsv()
+        val file: ArrayList<Car>? = readCsv(readFileDir)
         Assert.assertNull(file)
     }
 
