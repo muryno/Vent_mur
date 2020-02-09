@@ -6,17 +6,18 @@ import androidx.lifecycle.ViewModel
 import com.ven.murainoyakububiola.services.model.Car
 import com.ven.murainoyakububiola.services.model.FilterEntity
 import com.ven.murainoyakububiola.utils.handleCar
-import java.util.ArrayList
+import java.util.*
 
 class CarFilteredViewModel(finalScore : FilterEntity?) : ViewModel() {
 
 
-    private val _score = MutableLiveData<ArrayList<Car>>()
+    //getting array list of car
+    private val _car = MutableLiveData<ArrayList<Car>>()
     val carList: LiveData<ArrayList<Car>>
-        get() = _score
+        get() = _car
 
     init {
-        _score.value = handleCar(finalScore)
+        _car.value = handleCar(finalScore)
     }
 
 

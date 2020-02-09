@@ -1,5 +1,8 @@
 package com.ven.murainoyakububiola.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,8 +14,6 @@ import com.ven.murainoyakububiola.services.model.FilterEntity
 import com.ven.murainoyakububiola.view.adapter.CarFilteredAdapter
 import com.ven.murainoyakububiola.view.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_car_filtered_list.*
-import kotlinx.android.synthetic.main.activity_car_filtered_list.toolbar
-import kotlinx.android.synthetic.main.activity_main.*
 
 class CarFilteredListActivity : BaseActivity() {
 
@@ -33,6 +34,8 @@ class CarFilteredListActivity : BaseActivity() {
 
         setToolbar(toolbar, "Car owners ")
 
+        //to check read permission
+        checkFileWritePermission()
 
 
 
@@ -60,9 +63,17 @@ class CarFilteredListActivity : BaseActivity() {
     }
 
 
+    //checking for permission
 
-    private fun views(){
-
+    private fun checkFileWritePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) requestPermissions(
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                100
+            )
+        }
     }
+
+
 
 }

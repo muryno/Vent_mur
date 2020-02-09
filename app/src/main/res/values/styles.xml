@@ -30,4 +30,98 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+
+
+
+    <style name="match_wrap">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <style name="match_all">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="wrap_all">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+
+    <style name="parent_activity" parent="match_all">
+
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/background</item>
+    </style>
+
+
+    <style name="filter_item" parent="match_wrap">
+
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="parent_empty" parent="match_all">
+
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <style name="empty_icon" parent="match_wrap">
+
+        <item name="android:width">@dimen/hundred_dp</item>
+        <item name="android:height">@dimen/hundred_dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/sixteen_dp</item>
+        <item name="android:textSize">@dimen/sixteen_dp</item>
+        <item name="android:fontFamily">@font/sfprodisplay_regular</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+
+    <style name="lay_one" parent="filter_item">
+
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:padding">@dimen/sixteen_dp</item>
+    </style>
+
+    <style name="dta_styl" parent="wrap_all">
+
+        <item name="android:layout_marginStart">@dimen/eight_dp</item>
+        <item name="android:layout_marginBottom">@dimen/three_dp</item>
+        <item name="android:fontFamily">@font/sfprodisplay_bold</item>
+        <item name="android:textSize">@dimen/sixteen_sp</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
+    <style name="gende" parent="wrap_all">
+
+        <item name="android:layout_marginStart">@dimen/eight_dp</item>
+        <item name="android:layout_marginEnd">@dimen/eight_dp</item>
+        <item name="android:fontFamily">@font/sfprodisplay_regular</item>
+        <item name="android:textSize">@dimen/sixteen_sp</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
+
+
+
+    <style name="frst_view" >
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_margin">@dimen/ten_dp</item>
+        <item name="android:background">@color/divider</item>
+
+    </style>
+
+
+
+
+
 </resources>

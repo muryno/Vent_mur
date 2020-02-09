@@ -2,40 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical">
+
+    style="@style/parent_activity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp"
+       style="@style/match_wrap"
+        app:elevation="@dimen/line_height"
         app:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             app:title="Filter List"
             app:titleTextColor="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/match_wrap"
+            />
     </com.google.android.material.appbar.AppBarLayout>
 
 
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-
-
+       style="@style/match_all">
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/_recyclerView__car"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+
+                style="@style/match_wrap"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@layout/layout_filter_details" />
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Muraino Yakubu Biola</string>
+    <string name="empty_data_n_refresh">Empty data \n Refresh</string>
 </resources>

@@ -14,7 +14,7 @@ import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 
-
+/** check if device is online**/
 @TargetApi(Build.VERSION_CODES.M)
 fun isOnline(): Boolean {
 
@@ -30,7 +30,7 @@ fun isOnline(): Boolean {
     return activeNetwork != null
 }
 
-
+/** to read from csv file**/
 fun readCsv(csvfile: File?): ArrayList<Car>? {
     val data : ArrayList<Car> = ArrayList()
 
@@ -83,6 +83,7 @@ fun readCsv(csvfile: File?): ArrayList<Car>? {
 
 
 
+/** logic onn how to filter car csv file**/
 
 fun handleCar( data  : FilterEntity?):ArrayList<Car>? {
 
@@ -230,12 +231,6 @@ fun handleCar( data  : FilterEntity?):ArrayList<Car>? {
     return carsDat
 }
 
-fun objectCleaner(st : String): String{
-
-
-    st.substring(1, st.length -1)
-       return st
-}
 
 
 /**Reading file from external storage is depreciated from API 29 and testing will fail **/

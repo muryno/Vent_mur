@@ -2,17 +2,14 @@ package com.ven.murainoyakububiola.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import com.ven.murainoyakububiola.MainApplication
 import com.ven.murainoyakububiola.services.Repository.FilteredRepository
 import com.ven.murainoyakububiola.services.Repository.networkRequest.FilterNetwork
 import com.ven.murainoyakububiola.services.model.Car
 import com.ven.murainoyakububiola.services.model.FilterEntity
 import com.ven.murainoyakububiola.utils.handleCar
-import com.ven.murainoyakububiola.utils.readCsv
 import com.ven.murainoyakububiola.view.errorMessageView
-import java.util.ArrayList
+import java.util.*
 
 class FilteredListViewModel : ViewModel(), errorMessageView {
     /**
@@ -24,11 +21,12 @@ class FilteredListViewModel : ViewModel(), errorMessageView {
 
 
 
+    // listing to success respond from the server
     private val _successMessage = MutableLiveData<String>()
     val successMessage: LiveData<String>
         get() = _successMessage
 
-
+    // listing to error respond from the server
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String>
         get() = _errorMessage

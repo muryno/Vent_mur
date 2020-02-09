@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -18,7 +17,7 @@ import com.ven.murainoyakububiola.R
 import com.ven.murainoyakububiola.utils.isOnline
 
 
-//this is unique and to be use by all activity with same properties
+/**this is unique and to be use by all activity with same properties**/
 abstract class BaseActivity: AppCompatActivity() {
     internal var snackbar: Snackbar? = null
     @Volatile
@@ -33,12 +32,6 @@ abstract class BaseActivity: AppCompatActivity() {
         }
     }
 
-    fun setToolbar(title: String) {
-        if (supportActionBar != null) {
-            supportActionBar?.title = title
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-    }
 
 
     override fun setContentView(@LayoutRes layoutResID: Int) {

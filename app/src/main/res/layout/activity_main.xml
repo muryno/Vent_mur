@@ -2,42 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical">
+    style="@style/parent_activity">
 
 
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp"
-
+        style="@style/match_wrap"
+        app:elevation="@dimen/line_height"
         app:theme="@style/AppTheme.AppBarOverlay">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/match_wrap"
+            />
     </com.google.android.material.appbar.AppBarLayout>
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        style="@style/match_all"
+        >
 
 
 
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/match_wrap">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/_recyclerView__filter"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/match_wrap"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@layout/layout_filter" />
 
@@ -46,8 +38,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/progressBar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/sixty_dp"
+            android:layout_height="@dimen/sixty_dp"
             android:layout_gravity="center"
 
             app:cardBackgroundColor="@color/colorPrimary"

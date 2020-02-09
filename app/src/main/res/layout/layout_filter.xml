@@ -2,44 +2,31 @@
 <androidx.cardview.widget.CardView app:cardCornerRadius="5dp"
     android:layout_margin="6dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
 
-    android:layout_height="wrap_content"
+    style="@style/filter_item"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-
-        android:padding="15dp"
-
-
-        android:layout_height="wrap_content">
+       style="@style/lay_one">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/match_wrap">
 
         <ImageView
             android:id="@+id/view1"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="@dimen/sixteen_dp"
+            android:layout_height="@dimen/sixteen_dp"
             android:src="@drawable/ic_start_date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/txt_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="3dp"
-            android:fontFamily="@font/sfprodisplay_bold"
-            android:textSize="16sp"
-            android:textColor="@color/white"
+
+            style="@style/dta_styl"
+
 
             app:layout_constraintBottom_toBottomOf="@id/view1"
             app:layout_constraintStart_toEndOf="@id/view1"
@@ -49,8 +36,8 @@
 
         <View
             android:id="@+id/view2"
-            android:layout_width="1dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/line_height"
+            android:layout_height="@dimen/twenty_dp"
             app:layout_constraintStart_toStartOf="@id/view1"
             app:layout_constraintEnd_toEndOf="@+id/view1"
             app:layout_constraintTop_toBottomOf="@id/view1"
@@ -58,8 +45,8 @@
 
         <ImageView
             android:id="@+id/view3"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="@dimen/sixteen_dp"
+            android:layout_height="@dimen/sixteen_dp"
             android:src="@drawable/ic_end_date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view2"/>
@@ -67,15 +54,9 @@
 
         <TextView
             android:id="@+id/txt_stop"
-            android:fontFamily="@font/sfprodisplay_bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textSize="16sp"
-            android:textColor="@color/white"
 
+            style="@style/dta_styl"
 
-            android:layout_marginBottom="3dp"
             app:layout_constraintStart_toEndOf="@id/view3"
             app:layout_constraintTop_toTopOf="@id/view3"
             app:layout_constraintBottom_toBottomOf="@id/view3"
@@ -84,8 +65,8 @@
 
         <ImageView
             android:id="@+id/img_view"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="@dimen/eithen_dp"
+            android:layout_height="@dimen/eithen_dp"
             android:src="@drawable/ic_gender"
             app:layout_constraintEnd_toStartOf="@id/txt_gender"
             app:layout_constraintTop_toTopOf="@id/txt_gender"
@@ -96,13 +77,9 @@
 
         <TextView
             android:id="@+id/txt_gender"
-            android:fontFamily="@font/sfprodisplay_regular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+
+            style="@style/gende"
             android:text="male"
-            android:textColor="@color/white"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,16 +90,14 @@
 
     <View
         android:id="@+id/first_view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
 
-        android:layout_margin="10dp"
-        android:background="@color/divider" />
+        style="@style/frst_view"
+     />
 
     <LinearLayout
         android:id="@+id/color_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+        style="@style/match_wrap"
         android:weightSum="1.3"
         android:orientation="horizontal">
 
