@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView app:cardCornerRadius="5dp"
-    android:layout_margin="6dp"
+    android:layout_margin="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -11,17 +11,21 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:padding="10dp"
+        android:padding="15dp"
+
+        android:background="@color/colorPrimary"
+
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tvDestination"
+            android:id="@+id/txt_fullname"
             android:fontFamily="@font/sfprodisplay_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:textSize="16sp"
 
+            android:textColor="@color/white"
             tools:text="Full name"
 
           />
@@ -36,10 +40,13 @@
         android:weightSum="2.01">
         <TextView
 
-            android:fontFamily="@font/mavenpro_medium"
+            android:id="@+id/txt_email"
+            android:fontFamily="@font/sfprodisplay_medium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/white"
+
 
             tools:text="Murainoy@gmail.com"
 
@@ -50,13 +57,16 @@
             android:layout_weight="0.01"
             android:background="@color/divider" />
         <TextView
+            android:id="@+id/txt_job_title"
 
-            android:fontFamily="@font/mavenpro_medium"
+            android:fontFamily="@font/sfprodisplay_medium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
             tools:text="Job title"
+            android:textColor="@color/white"
+
 
             android:gravity="end"
             />
@@ -87,12 +97,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:textSize="13sp"
+                android:textColor="@color/white"
+
                 android:layout_height="wrap_content"
                 android:text="Model" />
 
             <TextView
-                android:id="@+id/tvSize"
-                android:fontFamily="@font/mavenpro_medium"
+                android:id="@+id/txt_model_car"
+                android:fontFamily="@font/sfprodisplay_medium"
+
+                android:textColor="@color/white"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,14 +127,18 @@
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
 
+                android:textColor="@color/white"
+
                 android:text="Model year"/>
 
             <TextView
-                android:id="@+id/tvTonnage"
-                android:fontFamily="@font/mavenpro_medium"
+                android:id="@+id/txt_model_year"
+                android:fontFamily="@font/sfprodisplay_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:textColor="@color/white"
+
                 tools:text="2001"/>
 
         </LinearLayout>
@@ -136,15 +154,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
+                android:textColor="@color/white"
+
 
                 android:text="Model Color"/>
 
             <TextView
-                android:id="@+id/tvLine"
-                android:fontFamily="@font/mavenpro_medium"
+                android:id="@+id/txt_model_color"
+                android:fontFamily="@font/sfprodisplay_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:textColor="@color/white"
+
                 tools:text="Red"/>
 
         </LinearLayout>
@@ -171,19 +193,21 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:textSize="13sp"
+                android:textColor="@color/white"
+
                 android:text="Bio"
 
                 />
 
 
             <TextView
-                android:id="@+id/txt_color"
-                android:fontFamily="@font/mavenpro_regular"
+                android:id="@+id/txt_bio"
+                android:fontFamily="@font/sfprodisplay_regular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
+                android:textColor="@color/white"
 
-                android:textColor="@color/black"
 
                 android:layout_marginStart="8dp"
                 tools:text="male"
@@ -206,21 +230,23 @@
                 android:layout_height="16dp"
                 android:src="@drawable/ic_flag"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/white"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
 
             <TextView
                 android:id="@+id/txt_country"
-                android:fontFamily="@font/mavenpro_regular"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-
+                android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
-                android:text="male"
 
+                android:textColor="@color/white"
+
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/sfprodisplay_regular"
+                android:text="male"
 
 
                 />
@@ -234,11 +260,12 @@
 
             <TextView
                 android:id="@+id/txt_gender"
-                android:fontFamily="@font/mavenpro_regular"
+                android:fontFamily="@font/sfprodisplay_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:textColor="@color/white"
 
                 android:text="male"
 

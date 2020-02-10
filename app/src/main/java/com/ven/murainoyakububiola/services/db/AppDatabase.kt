@@ -1,17 +1,17 @@
-package com.ven.murainoyakububiola.services
+package com.ven.murainoyakububiola.services.db
 
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-import com.ven.murainoyakububiola.db.dao.FilterDao
+import com.ven.murainoyakububiola.services.db.dao.FilterDao
 
-import com.ven.murainoyakububiola.db.converter.Converter
-import com.ven.murainoyakubu.db.model.Filter
+import com.ven.murainoyakububiola.services.db.converter.Converter
+import com.ven.murainoyakububiola.services.model.FilterEntity
 import com.ven.murainoyakububiola.MainApplication
 
-@Database(entities = [Filter::class], version = 1, exportSchema = false)
+@Database(entities = [FilterEntity::class], version = 1, exportSchema = false)
 
 @TypeConverters(Converter::class)
 abstract class AppDatabase: RoomDatabase() {

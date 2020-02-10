@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayoutView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+   style="@style/parent_empty">
+
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/hundred_dp"
+        android:layout_height="@dimen/hundred_dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_empty_rec"
+  />
     <TextView
         android:id="@+id/tv_message"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/empty_screen"
-        android:textColor="@color/divider"/>
-</LinearLayout>
+        android:padding="16dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/sfprodisplay_regular"
+        android:layout_below="@id/img"
+        android:text="@string/empty_data_n_refresh"
+        android:textColor="@color/colorAccent"/>
+</RelativeLayout>

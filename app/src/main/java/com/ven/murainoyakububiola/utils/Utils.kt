@@ -1,15 +1,20 @@
-package com.muryno.cardfinder.utils
+package com.ven.murainoyakububiola.utils
 
 import android.annotation.TargetApi
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
-import android.text.Editable
-import com.muryno.cardfinder.MainApplication
-import com.muryno.cardfinder.R
-import java.util.*
+import android.os.Environment
+import com.ven.murainoyakububiola.MainApplication
+import com.ven.murainoyakububiola.services.model.Car
+import com.ven.murainoyakububiola.services.model.FilterEntity
+import de.siegmar.fastcsv.reader.CsvContainer
+import de.siegmar.fastcsv.reader.CsvReader
+import java.io.File
+import java.io.IOException
+import java.nio.charset.StandardCharsets
 
-
+/** check if device is online**/
 @TargetApi(Build.VERSION_CODES.M)
 fun isOnline(): Boolean {
 
@@ -25,118 +30,233 @@ fun isOnline(): Boolean {
     return activeNetwork != null
 }
 
-fun greetings() :String? {
-    val c = Calendar.getInstance()
+/** to read from csv file**/
+fun readCsv(csvfile: File?): ArrayList<Car>? {
+    val data : ArrayList<Car> = ArrayList()
 
-    val earlmorning = "Dear you should be on bed"
-    val morning2 = "Wake up dear.. good morning"
-    val morning3 = "Beautiful morning"
-    val evening = "Good afternoon"
-    val day = "Guess your day is going on fine"
-    val night = "Good evening"
-    when (c.get(Calendar.HOUR_OF_DAY)) {
-        in 0..5 -> {
-            return earlmorning
-        }
-        in 6..7 -> {
-            return morning2
-        }
-        in 8..11 -> {
-            return morning3
-        }
-
-        in 12..16 -> {
-            return evening
-        }
-
-        in 17..20 -> {
-            return day
-        }
-
-        in 21..23 -> {
-            return night
-        }
+    try {
 
 
+
+
+
+        val csvReader = CsvReader()
+        csvReader.setContainsHeader(true)
+
+        val csv: CsvContainer = csvReader.read(csvfile, StandardCharsets.UTF_8)
+        for (row in csv.rows) {
+
+
+            val carData = Car()
+
+            carData.id = row.getField(0)
+            carData.bio = row.getField(10)
+            carData.car_color = row.getField(7)
+            carData.car_model = row.getField(5)
+            carData.car_model_year = row.getField(6)
+            carData.country = row.getField(4)
+
+
+            carData.email = row.getField(3)
+            carData.first_name = row.getField(1)
+            carData.last_name = row.getField(2)
+            carData.gender = row.getField(8)
+            carData.job_title = row.getField(9)
+
+            data.add(carData)
+
+
+
+        }
+    }catch ( e: IOException){
+        e.cause
+        return null
     }
-    return ""
+
+    return  data
+
+
 }
 
 
-fun getGreetingIcon() :Int? {
 
-    val c = Calendar.getInstance()
 
-    when (c.get(Calendar.HOUR_OF_DAY)) {
-        in 0..5 -> {
-            return R.drawable.ic_sleepy
-        }
-        in 6..7 -> {
-            return R.drawable.ic_wake_up
-        }
-        in 8..11 -> {
-            return R.drawable.ic_sun
+
+
+/** logic onn how to filter car csv file**/
+
+fun handleCar( data  : FilterEntity?):ArrayList<Car>? {
+
+
+    /** to read from external storage**/
+    val carsDat: ArrayList<Car>? = ArrayList()
+        val carsData: ArrayList<Car>? = readCsv(readFromExternalStorage())
+
+
+        //
+        /**filter by start and end date alone**/
+
+        if (data?.colors?.size ?: 0 < 1 && data?.gender.isNullOrEmpty() && data?.countries?.size ?: 0 < 1) {
+            carsData?.filter {
+
+                (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                        it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0)
+            }?.let { carsDat?.addAll(it) }
+
         }
 
-        in 12..16 -> {
-            return R.drawable.ic_afternoon
+
+        /**filter by date and countries**/
+        else if (data?.colors?.size ?: 0 < 1 && data?.gender.isNullOrEmpty() && data?.countries?.size ?: 0 > 1) {
+            carsData?.filter {
+
+
+                (data?.countries?.contains(it.country) == true) &&
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0)
+
+            }?.let { carsDat?.addAll(it) }
         }
 
-        in 17..20 -> {
-            return R.drawable.ic_happy
+
+        /**filter by date and colors**/
+        else if (data?.colors?.size ?: 0 > 1 && data?.gender.isNullOrEmpty() && data?.countries?.size ?: 0 < 1) {
+            carsData?.filter {
+
+
+                (data?.colors?.contains(it.car_color) == true) &&
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0)
+
+            }?.let { carsDat?.addAll(it) }
         }
 
-        in 21..23 -> {
-            return R.drawable.ic_cloudy_night
-        }
-    }
-return 0
 
+        /**filter by date and gender**/
+
+        else if (data?.colors?.size ?: 0 < 1 && data?.gender?.isNotEmpty() == true && data?.countries?.size ?: 0 < 1) {
+            carsData?.filter {
+
+                (it.gender == data?.gender) &&
+                        (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0)
+
+
+            }?.let { carsDat?.addAll(it) }
+
+        }
+
+
+        /**filter all**/
+        else if (data?.colors?.size ?: 0 > 1 && data?.gender?.isNotEmpty() == true && data.countries?.size ?: 0 > 1) {
+            carsData?.filter {
+
+                (it.gender == data.gender) &&
+
+                        (data.countries?.contains(it.country) == true) &&
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0) &&
+
+                        data.colors?.contains(it.car_color) == true
+            }?.let { carsDat?.addAll(it) }
+
+        }
+
+
+            /**filter by date color and countries without gender**/
+            else if (data?.colors?.size ?: 0 > 1 && data?.gender.isNullOrEmpty() && data?.countries?.size ?: 0 > 1) {
+            carsData?.filter {
+
+
+                (data?.countries?.contains(it.country) == true) &&
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0) &&
+
+                        data.colors?.contains(it.car_color) == true
+            }?.let { carsDat?.addAll(it) }
+
+
+
+            /**filter by date color and gender without countries**/
+        } else if (data?.colors?.size ?: 0 > 1 && data?.gender?.isNotEmpty()==true && data.countries?.size ?: 0 < 1) {
+            carsData?.filter {
+
+                (it.gender == data.gender) &&
+
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0) &&
+
+                        data.colors?.contains(it.car_color) == true
+            }?.let { carsDat?.addAll(it) }
+
+
+        }
+
+
+        /**filter by date countries and gender without color**/
+        else if (data?.colors?.size ?: 0 < 1 && data?.gender?.isNotEmpty()==true && data.countries?.size ?: 0 > 1) {
+            carsData?.filter {
+
+                (it.gender == data.gender) &&
+
+                        (data.countries?.contains(it.country) == true) &&
+
+                        (data.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 &&
+                                it.car_model_year?.toInt() ?: 0 >= data.endYear ?: 0)
+
+            }?.let { carsDat?.addAll(it) }
+
+            /**fetch without filter all**/
+        }
+        else {
+            carsData?.filter {
+
+                (it.gender == data?.gender) ||
+
+                        (data?.countries?.contains(it.country) == true) ||
+
+                        (data?.startYear ?: 0 <= it.car_model_year?.toInt() ?: 0 ||
+                                it.car_model_year?.toInt() ?: 0 >= data?.endYear ?: 0) ||
+
+                        data?.colors?.contains(it.car_color) == true
+            }?.let { carsDat?.addAll(it) }
+
+        }
+
+    return carsDat
 }
 
-//m
-fun getCartLogo(s: Editable): Int{
 
-    when (s.substring(0, 1).toInt()) {
-        4 -> {
-            return R.drawable.ic_visa
-        }
-        5 -> {
-            return  R.drawable.ic_mastercard
-        }
-        6 -> {
-            return  R.drawable.ic_discover
-        }
-        3 -> {
-            return  R.drawable.ic_amex
-        }
-        else -> {
-            return  R.drawable.ic_warning
-        }
+
+/**Reading file from external storage is depreciated from API 29 and testing will fail **/
+  fun readFromExternalStorage(): File? {
+
+      val csvfile: File?
+    try {
+         csvfile = File(Environment.getExternalStorageDirectory().toString() + "/venten/car_ownsers_data.csv")
+
+    }catch ( e: IOException){
+        e.cause
+        return null
     }
+    return csvfile
 }
 
-fun setCardNumber(s: Editable){
-    val space = ' '
 
-    var pos = 0
-    while (true) {
-        if (pos >= s.length) break
-        if (space == s[pos] && ((pos + 1) % 5 != 0 || pos + 1 == s.length)) {
-            s.delete(pos, pos + 1)
-        } else {
-            pos++
-        }
+fun readFromExternalFilesDir(): File? {
+
+    val csvfile: File?
+    try {
+        csvfile = File(MainApplication.instance?.applicationContext?.getExternalFilesDir("/venten/car_ownsers_data.csv").toString())
+
+    }catch ( e: IOException){
+        e.cause
+        return null
     }
-    // Insert char where needed.
-    pos = 4
-    while (true) {
-        if (pos >= s.length) break
-        val c = s[pos]
-        // Only if its a digit where there should be a space we insert a space
-        if ("0123456789".indexOf(c) >= 0) {
-            s.insert(pos, "" + space)
-        }
-        pos += 5
-    }
+    return csvfile
 }
